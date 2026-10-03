@@ -2,7 +2,7 @@
 
 > **Simulated portfolio project.** The company, people, data and results are fictional and were built to show how I work as a business analyst. Dates, volumes and benefit figures are modelled, not measured at a real client.
 
-**Period:** 7 Oct 2024 - 31 Jan 2025 (Sprint 0 + 5 sprints + UAT + hypercare)  
+**Period:** 7 Oct 2024 - 31 Jan 2025 (Sprint 0, five sprints, UAT, hypercare)  
 **My role:** Business analyst: elicitation, As-Is/To-Be process design, BRD, business rules, backlog and Gherkin, SQL logic and validation, UAT coordination, change control, KPI definitions.
 
 ## The problem
@@ -49,6 +49,24 @@ stateDiagram-v2
   PENDING_APPROVAL --> RESOLVED: Manager approves, journal posted
   IN_REVIEW --> RESOLVED: auto-resolve or written off
   RESOLVED --> [*]
+```
+
+## Ingestion sequence
+
+```mermaid
+sequenceDiagram
+  participant G as Gateway
+  participant I as Ingestion API
+  participant D as Database
+  participant R as Recon job
+  participant F as Finance Analyst
+  G->>I: POST settlement.batch.completed (signed)
+  I->>I: verify HMAC, check idempotency key
+  I->>D: insert raw_gateway_settlements
+  I-->>G: 200 OK
+  D->>R: batch ready
+  R->>D: write recon_exceptions_audit (ON CONFLICT DO NOTHING)
+  R-->>F: exception tasks by owner queue
 ```
 
 ## Delivery timeline
@@ -129,7 +147,7 @@ gantt
 
 ## How to use the files
 
-- **Jira:** import `03-Jira-and-Agile/jira_import_*.csv` (steps in the Jira setup file). Gherkin is in the issue descriptions and in `gherkin-features/`.
+- **Jira:** import `03-Jira-and-Agile/jira_import_MIZ.csv` (steps in the setup file). Gherkin is in the issue descriptions and in `gherkin-features/`.
 - **Confluence:** pages in `04-Confluence-Pages/` are Markdown; paste with Insert > Markup > Markdown, or import the Word documents from the requirements folder.
-- **Lucidchart / diagrams.net:** open the `.drawio` files in diagrams.net, or in Lucidchart use Import > draw.io. SVG and PNG copies sit beside them. Mermaid sources are in `02-Process-and-Diagrams/mermaid/` and render on GitHub.
-- **Data and code:** SQL, Python and DAX are in `05-Data-and-Code/`; sample data is synthetic.
+- **Diagrams:** open `.drawio` files in diagrams.net (Lucidchart: Import > draw.io). SVG and PNG copies sit beside them; Mermaid sources are in `02-Process-and-Diagrams/mermaid/`.
+- **Data and code:** SQL and the synthetic-data script are in `05-Data-and-Code/`; sample data is synthetic.

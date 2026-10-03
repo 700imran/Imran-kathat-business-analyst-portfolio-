@@ -1,7 +1,0 @@
-team_key,team_code,team_name,department,location,team_lead
-1,FIN-OPS,Finance Operations,Finance,Dubai,Reem Khan
-2,PAY-OPS,Payments Operations,Finance,Dubai,Arjun Nair
-3,CS-DXB,Customer Support Dubai,Customer Operations,Dubai,Salma Idris
-4,CS-AUH,Customer Support Abu Dhabi,Customer Operations,Abu Dhabi,Faisal Qadir
-5,FUL-DXB,Fulfilment Dubai Hub,Fulfilment,Dubai,Mariam Youssef
-6,FUL-RUH,Fulfilment Riyadh,Fulfilment,Riyadh,Omar Tamimi

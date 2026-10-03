@@ -1,0 +1,12 @@
+V-01 input rows: 62
+V-01 output rows: 60 | columns: ['store_id', 'store_area', 'daily_customer_count', 'store_sales', 'region'] | region values: ['North', 'South']
+V-02 zeros in store_sales after cleaning: 1 | mean before (NaN skipped): 38149 | mean after: 37523
+V-03 R-squared: 0.436 n: 60
+V-04 r: 0.6179 p: 1.444841893187056e-07
+V-05 t: -1.008 p: 0.318
+V-06 EV: 30393.81 NPV: 322.1 FCF year1: 2200
+V-07 import task_runner: FileNotFoundError: No .xlsx or .csv files found
+V-08 run_forecast defined: False
+V-09 valuation_kpis signature: (ticker_symbol, gov_bond_yield=0.07)
+V-10 load_file: NameError name 'pd' is not defined
+V-11 save_output(None): TypeError expected str, bytes or os.PathLike object, not NoneType

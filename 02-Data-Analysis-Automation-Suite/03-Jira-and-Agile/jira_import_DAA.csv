@@ -1,0 +1,252 @@
+Issue Id,Issue Type,Summary,Parent,Description,Priority,Labels,Story point estimate,Sprint,Status,Component
+DAA-E1,Epic,Reliability Fixes,,"Make the runner import and run from a clean checkout. Findings F-01 to F-05, F-11.",Highest,Must,,,To Do,
+DAA-E2,Epic,Configuration and Portability,,"Remove hard-coded paths; add setup files. Findings F-06, F-12.",High,Must,,,To Do,
+DAA-E3,Epic,Data Quality and Statistics,,"Safer missing-value handling and clearer statistical outputs. Findings F-07, F-09, F-10.",Medium,Should,,,To Do,
+DAA-E4,Epic,Forecast Model Correctness,,Correct working-capital and NPV logic; add model integrity checks. Finding F-08.,High,Should,,,To Do,
+DAA-E5,Epic,Testing and Evidence,,"Automated tests and a benchmark that measures the benefit claims. Findings F-12, F-13.",Medium,Should,,,To Do,
+DAA-101,Story,Provide run_forecast and build the income statement,DAA-E1,"As a Analyst
+I want the model task to produce a three-statement forecast
+So that the README example works end to end
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Three-statement forecast through the runner
+  Scenario: Model task returns valuation outputs
+    Given opening revenue, 5 forecast years and an industry benchmark
+    When I run run_task(""model"")
+    Then an income statement, cash flow statement and balance sheet are produced for each year
+    And enterprise value and net present value are returned
+
+  Scenario: Balance sheet balances
+    Given a completed forecast
+    Then assets equal liabilities plus equity in every year
+
+  Scenario: Benchmark data is unavailable
+    Given the market data provider returns no statements
+    Then documented fallback assumptions are used and the output says so",Highest,"forecast,bug",13,Backlog,To Do,Forecast
+DAA-101-T1,Sub-task,Define income-statement builder,DAA-101,,Highest,"forecast,bug",,Backlog,To Do,Forecast
+DAA-101-T2,Sub-task,Wire cashflow and balance-sheet modules,DAA-101,,Highest,"forecast,bug",,Backlog,To Do,Forecast
+DAA-101-T3,Sub-task,Return enterprise value and NPV,DAA-101,,Highest,"forecast,bug",,Backlog,To Do,Forecast
+DAA-101-T4,Sub-task,Save outputs,DAA-101,,Highest,"forecast,bug",,Backlog,To Do,Forecast
+DAA-102,Story,Remove import-time side effects,DAA-E1,"As a Analyst
+I want modules to import without reading files
+So that notebooks and the runner start on any machine
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Import without side effects
+  Scenario: Import on a machine without the input folder
+    Given the input folder does not exist
+    When I import task_runner
+    Then no exception is raised and no file is read
+
+  Scenario: Example code only runs as a script
+    When I run latest_data_utils.py directly
+    Then the example executes",Highest,bug,2,Backlog,To Do,Input
+DAA-102-T1,Sub-task,Guard example code,DAA-102,,Highest,bug,,Backlog,To Do,Input
+DAA-102-T2,Sub-task,Check output_utils import,DAA-102,,Highest,bug,,Backlog,To Do,Input
+DAA-103,Story,Fix the kpi task call and missing-data valuation flag,DAA-E1,"As a Analyst
+I want the kpi task to call the KPI function correctly
+So that valuation results are produced or clearly marked insufficient
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: KPI task
+  Scenario: Valid ticker
+    When I run run_task(""kpi"") and enter ticker ""WMT""
+    Then a one-row KPI table is saved with P/E, P/B, earnings yield and dividend yield
+
+  Scenario: Missing earnings per share
+    Given the provider returns no EPS
+    Then the valuation column says ""Insufficient data"" instead of ""Overvalued""",High,"kpi,bug",3,Backlog,To Do,KPI
+DAA-103-T1,Sub-task,Align signature,DAA-103,,High,"kpi,bug",,Backlog,To Do,KPI
+DAA-103-T2,Sub-task,Add 'Insufficient data' flag,DAA-103,,High,"kpi,bug",,Backlog,To Do,KPI
+DAA-104,Story,Add missing pandas import in default_folder,DAA-E1,"As a Analyst
+I want named files to load from the default folder
+So that file loading works
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Load a named file
+  Scenario: File name only
+    Given ""Stores.csv"" exists in the configured input folder
+    When load_file(""Stores.csv"") is called
+    Then the dataframe is returned",High,bug,2,Backlog,To Do,Input
+DAA-105,Story,Support auto-selected files in save_output,DAA-E1,"As a Analyst
+I want outputs to save when the latest file is auto-picked
+So that no task fails at the final step
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Save when the file is auto-selected
+  Scenario: Latest-file mode
+    Given run_task(""clean"") is called without a file path
+    When the latest file is picked automatically
+    Then the live output file is named after the picked file and is saved",High,bug,2,Backlog,To Do,Output
+DAA-106,Story,Central configuration for input and output folders,DAA-E2,"As a Analyst
+I want folders set in one place
+So that the suite runs outside the original Windows machine
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Configuration
+  Scenario: Folders from configuration
+    Given INPUT_DIR and OUTPUT_DIR are set
+    Then all modules read and write only in those folders
+
+  Scenario: Default location
+    Given no configuration is set
+    Then the suite uses folders next to the project and creates the output folder when first saving",High,config,3,Backlog,To Do,Config
+DAA-106-T1,Sub-task,Config loader,DAA-106,,High,config,,Backlog,To Do,Config
+DAA-106-T2,Sub-task,Replace four hard-coded paths,DAA-106,,High,config,,Backlog,To Do,Config
+DAA-107,Story,requirements.txt and setup guide,DAA-E2,"As a New user
+I want exact dependencies and steps
+So that I can run it from the README
+
+MoSCoW: Must
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Setup
+  Scenario: Fresh environment
+    Given a new virtual environment
+    When I install requirements.txt and follow the README
+    Then run_task(""clean"") completes on the sample file",Medium,docs,2,Backlog,To Do,Docs
+DAA-108,Story,Configurable missing-value policy with a fill report,DAA-E3,"As a Analyst
+I want to choose how missing numbers are handled
+So that statistics are not biased by silent zeros
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Missing-value policy
+  Scenario: Leave missing values
+    Given policy ""leave""
+    Then numeric blanks stay blank and are excluded by the statistics functions
+
+  Scenario: Fill with median and report
+    Given policy ""median""
+    Then blanks are filled with the column median and a report lists column, count and value used
+
+  Scenario: Flag column
+    Given option ""flag""
+    Then a column <name>_was_missing records which rows were filled",Medium,data-quality,5,Backlog,To Do,Cleaning
+DAA-108-T1,Sub-task,Policy options,DAA-108,,Medium,data-quality,,Backlog,To Do,Cleaning
+DAA-108-T2,Sub-task,Flag columns,DAA-108,,Medium,data-quality,,Backlog,To Do,Cleaning
+DAA-108-T3,Sub-task,Fill report,DAA-108,,Medium,data-quality,,Backlog,To Do,Cleaning
+DAA-109,Story,Welch t-test option and effect size,DAA-E3,"As a Analyst
+I want a safer group comparison with an effect size
+So that I can judge practical significance
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Group comparison
+  Scenario: Welch option
+    Given the groups have different variances
+    When I choose Welch
+    Then the t-test is run with equal_var false
+
+  Scenario: Effect size
+    Then the output includes the mean difference of the two groups",Medium,statistics,3,Backlog,To Do,Analysis
+DAA-110,Story,Clear output for the relation task,DAA-E3,"As a Analyst
+I want a correlation summary table
+So that the output is not a repeated scalar column
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Relation output
+  Scenario: Several predictors
+    Given predictors ""store_area"" and ""daily_customer_count""
+    Then the output has one row per predictor with correlation and p-value",Low,statistics,3,Backlog,To Do,Analysis
+DAA-111,Story,Correct working-capital change and NPV definition,DAA-E4,"As a Finance reviewer
+I want working-capital change and NPV defined correctly
+So that valuation outputs can be reviewed
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Forecast formulas
+  Scenario: Working-capital change
+    Given working capital is 10% of revenue and revenue grows from 1,000,000 to 1,100,000
+    Then the year-1 working-capital cash outflow is 10,000
+
+  Scenario: Reference example
+    Given the published reference inputs
+    Then enterprise value matches the hand calculation within 0.01",High,model,5,Backlog,To Do,Forecast
+DAA-111-T1,Sub-task,Use delta working capital,DAA-111,,High,model,,Backlog,To Do,Forecast
+DAA-111-T2,Sub-task,NPV with initial investment input,DAA-111,,High,model,,Backlog,To Do,Forecast
+DAA-111-T3,Sub-task,Reference example,DAA-111,,High,model,,Backlog,To Do,Forecast
+DAA-112,Story,Three-statement integrity checks,DAA-E4,"As a Finance reviewer
+I want automatic checks that the balance sheet balances and cash ties
+So that errors in assumptions are visible
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Model checks
+  Scenario: Balance check
+    Then assets minus liabilities minus equity is zero within 0.01 for every year
+
+  Scenario: Cash tie-out
+    Then closing cash on the balance sheet equals opening cash plus net change in cash",Medium,model,8,Backlog,To Do,Forecast
+DAA-112-T1,Sub-task,Balance check,DAA-112,,Medium,model,,Backlog,To Do,Forecast
+DAA-112-T2,Sub-task,Cash tie-out,DAA-112,,Medium,model,,Backlog,To Do,Forecast
+DAA-112-T3,Sub-task,Check report,DAA-112,,Medium,model,,Backlog,To Do,Forecast
+DAA-113,Story,Automated tests for cleaning and analysis,DAA-E5,"As a Maintainer
+I want tests that run on every change
+So that fixes do not break behaviour
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Automated tests
+  Scenario: Cleaning rules
+    Given a fixture with mixed-case headers, padded text, duplicates and blanks
+    Then the test asserts every rule BRL-01 to BRL-05
+
+  Scenario: Statistics
+    Given a seeded dataset with known coefficients
+    Then regression coefficients are within tolerance of the known values",Medium,tests,5,Backlog,To Do,Testing
+DAA-113-T1,Sub-task,Fixtures,DAA-113,,Medium,tests,,Backlog,To Do,Testing
+DAA-113-T2,Sub-task,pytest suite,DAA-113,,Medium,tests,,Backlog,To Do,Testing
+DAA-113-T3,Sub-task,CI run,DAA-113,,Medium,tests,,Backlog,To Do,Testing
+DAA-114,Story,Benchmark harness for time and effort claims,DAA-E5,"As a Hiring manager or analyst
+I want measured runtime and manual-effort comparison on a sample task
+So that benefit figures are evidence, not estimates
+
+MoSCoW: Should
+Status: proposed improvement, not yet built.
+
+Acceptance criteria (Gherkin):
+Feature: Benchmark
+  Scenario: Measure runtime
+    Given a dataset of 50,000 rows
+    When the clean task runs 5 times
+    Then the median runtime is recorded in the benchmark report
+
+  Scenario: Manual baseline
+    Given the same task performed in a spreadsheet by an analyst
+    Then the time taken is recorded alongside the automated run",Medium,benchmark,5,Backlog,To Do,Testing
+DAA-114-T1,Sub-task,Sample workload,DAA-114,,Medium,benchmark,,Backlog,To Do,Testing
+DAA-114-T2,Sub-task,Manual baseline timing,DAA-114,,Medium,benchmark,,Backlog,To Do,Testing
+DAA-114-T3,Sub-task,Report,DAA-114,,Medium,benchmark,,Backlog,To Do,Testing

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="330" viewBox="0 0 1250 330" font-family="Arial, Helvetica, sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#444"/></marker></defs>
+<rect width="1250" height="330" fill="#fff"/>
+<text x="14" y="22" font-size="15" font-weight="bold" fill="#1F3A5F">financial_forecast() - calculation chain (forecast_utils.py)</text>
+<polyline points="155,148 170,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="305,148 320,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="455,148 470,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="605,148 620,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="755,148 770,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="905,148 920,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="1055,148 1070,148" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<rect x="20" y="110" width="135" height="76" rx="8" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.3"/>
+<text x="87.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">Revenue(y) =</text>
+<text x="87.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">revenue x (1+g)^y</text>
+<rect x="170" y="110" width="135" height="76" rx="8" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.3"/>
+<text x="237.5" y="139.5" font-size="10" text-anchor="middle" fill="#222">COGS, Opex,</text>
+<text x="237.5" y="151.5" font-size="10" text-anchor="middle" fill="#222">Depreciation as %</text>
+<text x="237.5" y="163.5" font-size="10" text-anchor="middle" fill="#222">of revenue</text>
+<rect x="320" y="110" width="135" height="76" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.3"/>
+<text x="387.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">EBIT = Revenue - COGS</text>
+<text x="387.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">- Opex - Depreciation</text>
+<rect x="470" y="110" width="135" height="76" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.3"/>
+<text x="537.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">Net income =</text>
+<text x="537.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">EBIT x (1 - tax)</text>
+<rect x="620" y="110" width="135" height="76" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.3"/>
+<text x="687.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">FCF = Net income + Dep</text>
+<text x="687.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">- Capex - WC change*</text>
+<rect x="770" y="110" width="135" height="76" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.3"/>
+<text x="837.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">Discounted FCF =</text>
+<text x="837.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">FCF / (1+r)^y</text>
+<rect x="920" y="110" width="135" height="76" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.3"/>
+<text x="987.5" y="145.5" font-size="10" text-anchor="middle" fill="#222">Terminal value =</text>
+<text x="987.5" y="157.5" font-size="10" text-anchor="middle" fill="#222">FCF5 x (1+tg)/(r - tg)</text>
+<rect x="1070" y="110" width="135" height="76" rx="8" fill="#D5E8D4" stroke="#82B366" stroke-width="1.3"/>
+<text x="1137.5" y="139.5" font-size="10" text-anchor="middle" fill="#222">Enterprise value =</text>
+<text x="1137.5" y="151.5" font-size="10" text-anchor="middle" fill="#222">sum(disc. FCF) +</text>
+<text x="1137.5" y="163.5" font-size="10" text-anchor="middle" fill="#222">disc. terminal value</text>
+<rect x="20" y="230" width="760" height="52" fill="#FFFFFF" stroke="#999999" stroke-width="1.3"/>
+<text x="400.0" y="253.5" font-size="10" text-anchor="middle" fill="#222">* WC change is computed as revenue x WC % (a level, not a year-on-year change): finding F-08.</text>
+<text x="400.0" y="265.5" font-size="10" text-anchor="middle" fill="#222">NPV is returned as 10% of final-year FCF (placeholder): finding F-08.</text>
+</svg>
