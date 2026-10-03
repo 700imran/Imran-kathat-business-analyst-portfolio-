@@ -1,0 +1,31 @@
+{
+  "name": "Mirsad Operations",
+  "dataColors": [
+    "#1F3A5F",
+    "#2F6FDD",
+    "#16A38A",
+    "#E0902B",
+    "#D9534F",
+    "#8A5FD1",
+    "#6B7488",
+    "#9BB8E6"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1D2433",
+  "tableAccent": "#1F3A5F",
+  "good": "#16A38A",
+  "neutral": "#E0902B",
+  "bad": "#D9534F",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#1F3A5F"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#1D2433"
+    }
+  }
+}

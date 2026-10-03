@@ -1,0 +1,10 @@
+flowchart LR
+  SRC[Operational CSV exports<br/>3 systems] --> PY[ops_hygiene.py<br/>clean, cast, variance, validate]
+  PY -->|clean| FACT[(Fact_DiscrepancyResolution)]
+  PY -->|rejects + reason| Q[quarantine_tickets.csv]
+  PY --> LOG[Quality log]
+  DIM[(Dim_Date, Dim_OperationsTeam,<br/>Dim_ResolutionStatus)] --> PBI
+  BUD[(Fact_BudgetAllocation,<br/>Fact_ResourceUtilization)] --> PBI
+  FACT --> PBI[Power BI model<br/>DAX measures + RLS]
+  PBI --> DASH[Executive dashboard]
+  PBI --> XL[Excel dashboard]

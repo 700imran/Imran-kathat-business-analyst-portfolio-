@@ -1,0 +1,102 @@
+// Mirsad measures. Model relationships: see 01-Requirements/Mirsad_Data_Model_Specification.docx
+
+Clearance Velocity (Median Working Hrs) =
+// Median hours from ticket opened to resolved, with Saturday/Sunday time removed.
+// Only resolved tickets count; open tickets would distort the median downward.
+// For fact tables above ~1M rows, move the row-level calculation into a calculated
+// column (or into the SQL layer) and take MEDIAN() of that column.
+VAR ResolvedTickets =
+    FILTER (
+        Fact_DiscrepancyResolution,
+        NOT ISBLANK ( Fact_DiscrepancyResolution[resolved_at_gst] )
+    )
+RETURN
+    MEDIANX (
+        ResolvedTickets,
+        VAR OpenedTs   = Fact_DiscrepancyResolution[opened_at_gst]
+        VAR ResolvedTs = Fact_DiscrepancyResolution[resolved_at_gst]
+        // Datetime subtraction returns days; x24 converts to hours
+        VAR TotalHours = ( ResolvedTs - OpenedTs ) * 24
+        // Every calendar day the ticket touched
+        VAR DaysTouched =
+            CALENDAR (
+                DATE ( YEAR ( OpenedTs ),   MONTH ( OpenedTs ),   DAY ( OpenedTs ) ),
+                DATE ( YEAR ( ResolvedTs ), MONTH ( ResolvedTs ), DAY ( ResolvedTs ) )
+            )
+        // Keep Saturday (6) and Sunday (7); WEEKDAY(..., 2) numbers Monday as 1
+        VAR WeekendDays =
+            FILTER ( DaysTouched, WEEKDAY ( [Date], 2 ) >= 6 )
+        // Hours of the ticket's life that overlap each weekend day
+        VAR WeekendHours =
+            SUMX (
+                WeekendDays,
+                VAR DayStart     = [Date]
+                VAR DayEnd       = [Date] + 1
+                VAR OverlapStart = MAX ( DayStart, OpenedTs )
+                VAR OverlapEnd   = MIN ( DayEnd, ResolvedTs )
+                RETURN MAX ( 0, OverlapEnd - OverlapStart ) * 24
+            )
+        RETURN
+            TotalHours - WeekendHours
+    )
+
+
+Daily Resolution Rate % =
+// Tickets resolved on the day / tickets that arrived on the day.
+// Can exceed 100% when the team is burning down backlog; that is intended.
+// Non-working days return BLANK so weekend zeros do not drag the trend line.
+VAR IncomingTickets =
+    COUNTROWS ( Fact_DiscrepancyResolution )              // active relationship: opened date
+VAR ResolvedTickets =
+    CALCULATE (
+        COUNTROWS ( Fact_DiscrepancyResolution ),
+        USERELATIONSHIP (
+            Fact_DiscrepancyResolution[resolved_date_key],
+            Dim_Date[date_key]
+        ),                                                // switch to resolved date
+        Fact_DiscrepancyResolution[resolved_date_key] <> BLANK ()
+    )
+VAR IsNonWorkingDay =
+    SELECTEDVALUE ( Dim_Date[is_working_day] ) = FALSE ()
+RETURN
+    IF ( IsNonWorkingDay, BLANK (), DIVIDE ( ResolvedTickets, IncomingTickets ) )
+
+
+Margin Variance % vs Budget =
+// (Actual margin - Budgeted margin) / |Budgeted margin|.
+// Budgets are monthly, so the measure is only meaningful at month level or above.
+// At day level it returns BLANK instead of repeating the full month's budget.
+VAR ActualMargin =
+    SUM ( Fact_DiscrepancyResolution[net_margin_aed] )
+VAR BudgetMargin =
+    CALCULATE (
+        SUM ( Fact_BudgetAllocation[budgeted_margin_aed] ),
+        TREATAS (
+            VALUES ( Dim_Date[year_month_key] ),
+            Fact_BudgetAllocation[year_month_key]
+        )
+    )
+RETURN
+    IF (
+        ISINSCOPE ( Dim_Date[full_date] ),
+        BLANK (),
+        DIVIDE ( ActualMargin - BudgetMargin, ABS ( BudgetMargin ) )
+    )
+
+
+Tickets Incoming =
+// Tickets opened in the current filter context (active relationship: opened_date_key)
+COUNTROWS ( Fact_DiscrepancyResolution )
+
+Tickets Resolved (by resolution date) =
+CALCULATE (
+    COUNTROWS ( Fact_DiscrepancyResolution ),
+    USERELATIONSHIP ( Fact_DiscrepancyResolution[resolved_date_key], Dim_Date[date_key] ),
+    Fact_DiscrepancyResolution[resolved_date_key] <> BLANK ()
+)
+
+Resource Utilization % =
+// Booked hours / available hours (available = FTE x working days x 8)
+DIVIDE ( SUM ( Fact_ResourceUtilization[booked_hours] ), SUM ( Fact_ResourceUtilization[available_hours] ) )
+
+Net Variance AED = SUM ( Fact_DiscrepancyResolution[variance_amount_aed] )

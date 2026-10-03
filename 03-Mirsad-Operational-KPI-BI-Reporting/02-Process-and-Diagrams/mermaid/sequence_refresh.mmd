@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant X as Export owner
+  participant P as Pipeline
+  participant M as Power BI model
+  participant B as BI owner
+  participant U as Leaders
+  X->>P: CSV lands by 06:00 GST
+  P->>P: clean, validate, quarantine
+  P->>M: load star schema
+  M->>M: scheduled refresh 06:30 GST
+  alt refresh fails twice
+    M-->>B: alert
+  else success
+    M-->>U: dashboard updated (RLS applied)
+  end
+  P-->>X: weekly quarantine report

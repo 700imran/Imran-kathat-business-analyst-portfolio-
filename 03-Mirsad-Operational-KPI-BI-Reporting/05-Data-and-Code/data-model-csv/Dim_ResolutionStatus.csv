@@ -1,0 +1,5 @@
+status_key,status_name,is_terminal,sort_order
+OPEN,Open,False,1
+IN_PROGRESS,In Progress,False,2
+RESOLVED,Resolved,True,3
+WRITTEN_OFF,Written Off,True,4

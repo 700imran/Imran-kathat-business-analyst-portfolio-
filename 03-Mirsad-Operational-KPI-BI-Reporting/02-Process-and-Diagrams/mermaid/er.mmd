@@ -1,0 +1,20 @@
+erDiagram
+  DIM_DATE ||--o{ FACT_DISCREPANCYRESOLUTION : "opened (active)"
+  DIM_DATE ||--o{ FACT_DISCREPANCYRESOLUTION : "resolved (inactive)"
+  DIM_OPERATIONSTEAM ||--o{ FACT_DISCREPANCYRESOLUTION : owns
+  DIM_RESOLUTIONSTATUS ||--o{ FACT_DISCREPANCYRESOLUTION : classifies
+  DIM_OPERATIONSTEAM ||--o{ FACT_BUDGETALLOCATION : budgets
+  DIM_OPERATIONSTEAM ||--o{ FACT_RESOURCEUTILIZATION : staffs
+  DIM_DATE { int date_key PK
+    date full_date
+    boolean is_weekend
+    boolean is_uae_public_holiday
+    boolean is_working_day }
+  FACT_DISCREPANCYRESOLUTION { bigint resolution_key PK
+    int opened_date_key FK
+    int resolved_date_key FK
+    int team_key FK
+    varchar status_key FK
+    numeric variance_amount_aed
+    numeric net_margin_aed
+    numeric resolution_hours_raw }
