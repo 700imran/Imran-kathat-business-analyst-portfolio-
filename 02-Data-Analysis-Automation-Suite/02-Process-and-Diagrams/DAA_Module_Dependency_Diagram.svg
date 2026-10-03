@@ -2,19 +2,19 @@
 <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#444"/></marker></defs>
 <rect width="1300" height="560" fill="#fff"/>
 <text x="14" y="22" font-size="15" font-weight="bold" fill="#1F3A5F">Data Analysis Automation Suite - module dependencies (as committed)</text>
-<polyline points="650,65 650,135 90,135 90,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 245,135 245,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 400,135 400,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 555,135 555,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 710,135 710,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 865,135 865,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 1020,135 1020,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="650,65 650,135 1175,135 1175,205" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 90,135 90,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 245,135 245,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 400,135 400,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 555,135 555,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 710,135 710,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 865,135 865,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 1020,135 1020,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
+<polyline points="650,65 650,135 1175,135 1175,180" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
 <polyline points="710,230 710,280 690,280 690,330" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
 <polyline points="865,230 865,330" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
 <polyline points="865,450 865,386" fill="none" stroke="#444" stroke-width="1.3"  marker-end="url(#ar)"/>
-<polyline points="1020,205 1021,280 1005,280 1005,361" fill="none" stroke="#444" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#ar)"/>
-<polyline points="1020,205 1021,280 1185,280 1185,361" fill="none" stroke="#444" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<polyline points="1020,205 1021,280 1040,280 1040,330" fill="none" stroke="#444" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<polyline points="1020,205 1021,280 1210,280 1210,330" fill="none" stroke="#444" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#ar)"/>
 <rect x="996" y="230" width="49" height="13" fill="#ffffff"/>
 <text x="1020" y="240" font-size="9.5" fill="#B85450" text-anchor="middle" font-weight="bold">intended</text>
 <rect x="540" y="40" width="220" height="50" rx="22" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="2"/>
@@ -45,12 +45,12 @@
 <text x="865.0" y="472.5" font-size="10" text-anchor="middle" fill="#222">financial_metrics_utils.py</text>
 <text x="865.0" y="484.5" font-size="10" text-anchor="middle" fill="#222">(standalone, not called</text>
 <text x="865.0" y="496.5" font-size="10" text-anchor="middle" fill="#222">by the runner)</text>
-<rect x="930" y="330" width="150" height="62" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.3"/>
-<text x="1005.0" y="352.5" font-size="10" text-anchor="middle" fill="#222">cashflow_utils.py</text>
-<text x="1005.0" y="364.5" font-size="10" text-anchor="middle" fill="#222">(not called by</text>
-<text x="1005.0" y="376.5" font-size="10" text-anchor="middle" fill="#222">committed code)</text>
-<rect x="1110" y="330" width="150" height="62" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.3"/>
-<text x="1185.0" y="352.5" font-size="10" text-anchor="middle" fill="#222">balance_sheet_utils.py</text>
-<text x="1185.0" y="364.5" font-size="10" text-anchor="middle" fill="#222">(not called by</text>
-<text x="1185.0" y="376.5" font-size="10" text-anchor="middle" fill="#222">committed code)</text>
+<rect x="965" y="330" width="150" height="62" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.3"/>
+<text x="1040.0" y="352.5" font-size="10" text-anchor="middle" fill="#222">cashflow_utils.py</text>
+<text x="1040.0" y="364.5" font-size="10" text-anchor="middle" fill="#222">(not called by</text>
+<text x="1040.0" y="376.5" font-size="10" text-anchor="middle" fill="#222">committed code)</text>
+<rect x="1135" y="330" width="150" height="62" rx="8" fill="#F8CECC" stroke="#B85450" stroke-width="1.3"/>
+<text x="1210.0" y="352.5" font-size="10" text-anchor="middle" fill="#222">balance_sheet_utils.py</text>
+<text x="1210.0" y="364.5" font-size="10" text-anchor="middle" fill="#222">(not called by</text>
+<text x="1210.0" y="376.5" font-size="10" text-anchor="middle" fill="#222">committed code)</text>
 </svg>

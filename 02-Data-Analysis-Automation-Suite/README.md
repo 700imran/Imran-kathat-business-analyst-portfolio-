@@ -52,7 +52,7 @@ sequenceDiagram
   A-->>R: fitted OLS model
   R->>R: df.scenario_prediction = fittedvalues
   R->>O: save_output(df, filepath, "scenario")
-  O-->>U: live CSV updated; asks about archive copy
+  O-->>U: live CSV updated, then asks about an archive copy
 ```
 
 ## Forecast calculation chain
@@ -68,6 +68,16 @@ flowchart LR
   TV --> EV[Enterprise value]
   WC[WC change: revenue x WC pct<br/>see finding F-08] -.-> F
 ```
+
+## Diagrams
+
+Editable `.drawio` sources are in `02-Process-and-Diagrams/`.
+
+![Task runner flow](02-Process-and-Diagrams/DAA_Task_Runner_Flow.png)
+
+![Module dependencies](02-Process-and-Diagrams/DAA_Module_Dependency_Diagram.png)
+
+![Forecast calculation chain](02-Process-and-Diagrams/DAA_Forecast_Calculation_Chain.png)
 
 ## What I found when I reviewed it
 

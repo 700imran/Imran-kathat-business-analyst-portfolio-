@@ -13,4 +13,4 @@ sequenceDiagram
   A-->>R: fitted OLS model
   R->>R: df.scenario_prediction = fittedvalues
   R->>O: save_output(df, filepath, "scenario")
-  O-->>U: live CSV updated; asks about archive copy
+  O-->>U: live CSV updated, then asks about an archive copy

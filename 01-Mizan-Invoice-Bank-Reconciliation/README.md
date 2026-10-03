@@ -69,6 +69,18 @@ sequenceDiagram
   R-->>F: exception tasks by owner queue
 ```
 
+## Diagrams
+
+BPMN and architecture diagrams are shown below (editable `.drawio` sources are in `02-Process-and-Diagrams/`).
+
+![As-Is process](02-Process-and-Diagrams/Mizan_BPMN_AsIs.png)
+
+![To-Be process](02-Process-and-Diagrams/Mizan_BPMN_ToBe.png)
+
+![System context](02-Process-and-Diagrams/Mizan_Context_Diagram.png)
+
+![Entity relationship diagram](02-Process-and-Diagrams/Mizan_ERD.png)
+
 ## Delivery timeline
 
 ```mermaid
