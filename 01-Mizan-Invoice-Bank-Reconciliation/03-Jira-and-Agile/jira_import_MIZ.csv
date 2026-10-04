@@ -3,7 +3,7 @@ MIZ-E1,Epic,Settlement Ingestion,,"Replace manual bank/gateway portal exports wi
 MIZ-E2,Epic,Matching Engine & Tolerance Rules,,"Set-based matching of gateway settlements to ledger invoices with fee pricing, VAT-on-fee and UTC/GST timing logic. Covers BR-02, FR-03 to FR-05.",Highest,Must,,,Done,
 MIZ-E3,Epic,Exception Management & Routing,,"Orphan detection in both directions, triage tags and owner routing. Covers BR-03, FR-06, FR-07.",High,Must,,,Done,
 MIZ-E4,Epic,Approval & Ledger Adjustment,,"In-tool approval with thresholds and SLA escalation; ERP journal posting via API. Covers BR-01, BR-05, FR-08, FR-09.",High,Must,,,Done,
-MIZ-E5,Epic,Reconciliation Reporting & Audit,,"KPI dashboard, exception tracker and audit export. Covers BR-04, BR-05, FR-10, FR-11.",Medium,Should,,,Done,
+MIZ-E5,Epic,Reconciliation Reporting & Audit,,"KPI workbook, exception tracker and audit export. Covers BR-04, BR-05, FR-10, FR-11.",Medium,Should,,,Done,
 MIZ-101,Story,Webhook receiver with signature verification and idempotency,MIZ-E1,"As a Finance Analyst
 I want settlement batches ingested automatically when the gateway publishes them
 So that I stop downloading portal files by hand
@@ -312,26 +312,26 @@ MIZ-109-T1,Sub-task,ERP sandbox access,MIZ-109,,High,"erp,api",,MIZ Sprint 4,Don
 MIZ-109-T2,Sub-task,Posting service with idempotency key,MIZ-109,,High,"erp,api",,MIZ Sprint 4,Done,ERP Integration
 MIZ-109-T3,Sub-task,429 backoff and resume,MIZ-109,,High,"erp,api",,MIZ Sprint 4,Done,ERP Integration
 MIZ-109-T4,Sub-task,Journal-to-exception link,MIZ-109,,High,"erp,api",,MIZ Sprint 4,Done,ERP Integration
-MIZ-110,Story,Reconciliation KPI dashboard and exception tracker,MIZ-E5,"As a Finance Controller
+MIZ-110,Story,Reconciliation KPI workbook and exception tracker,MIZ-E5,"As a Finance Controller
 I want live view of match rate, clearance velocity and daily resolution rate
 So that I can steer the team without asking for spreadsheets
 
 MoSCoW: Should
 
 Acceptance criteria (Gherkin):
-Feature: Reconciliation KPI dashboard
+Feature: Reconciliation KPI workbook
   Scenario: Match rate is shown for the selected period
     Given 26,000 settlements were reconciled and 25,220 are MATCHED
-    When the controller selects the month
-    Then the match rate card shows 97.0%
+    When the controller opens the KPI Tracker sheet
+    Then the match rate shows 97.0%
 
   Scenario: Clearance velocity excludes weekends
     Given an exception opened Friday 16:00 GST and resolved Monday 10:00 GST
     Then its clearance time is 18.0 working hours
 
   Scenario: Daily resolution rate on a non-working day
-    When the controller selects a Saturday
-    Then the resolution rate card shows no value instead of 0%",Medium,"kpi,dashboard",5,MIZ Sprint 5,Done,Reporting
+    When the controller reads the Daily Resolution sheet for a Saturday
+    Then the rate cell is blank instead of 0%",Medium,"kpi,dashboard",5,MIZ Sprint 5,Done,Reporting
 MIZ-110-T1,Sub-task,KPI definitions sign-off,MIZ-110,,Medium,"kpi,dashboard",,MIZ Sprint 5,Done,Reporting
 MIZ-110-T2,Sub-task,Dashboard build,MIZ-110,,Medium,"kpi,dashboard",,MIZ Sprint 5,Done,Reporting
 MIZ-110-T3,Sub-task,Exception tracker workbook,MIZ-110,,Medium,"kpi,dashboard",,MIZ Sprint 5,Done,Reporting
