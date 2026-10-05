@@ -1,66 +1,118 @@
-# Data Analysis Automation Suite (Python, pandas, Statistics)
+# Enterprise Data Automation & Decision Platform
+### Product Architecture & Agile Governance | Business Analysis Case Study
 
-> **Real code, documented and reviewed afterwards.** Source: https://github.com/700imran/data-analysis-automation-script (reviewed at commit `a04c40c`). Figures below come from running that code on synthetic test data. Evidence is marked *Verified* (I ran it) or *Read from code*.
+![Type](https://img.shields.io/badge/Type-Portfolio%20case%20study-blue) ![Code](https://img.shields.io/badge/Code-Real%20Python%20suite-black) ![Review](https://img.shields.io/badge/Review-13%20findings%20logged-lightgrey)
 
-A Python suite (12 modules, about 800 lines) that cleans a CSV or Excel file and runs one chosen analysis (regression, correlation, two-group t-test, valuation KPIs from market data, DCF forecast) through a single task runner, then saves the result to a fixed output file for dashboards.
+> **Status:** a personal Python analysis suite, documented and reviewed afterwards as a business analyst. The code is real and public; it is not deployed as a hosted system. Documents were AI-assisted, then directed and reviewed by me. Evidence in this folder is marked **Verified** (I ran it) or **Read from code**.
 
-## Deliverables
+---
 
-| Deliverable | File |
+## 1. Executive Summary
+
+Analysts repeat the same steps for every new dataset: tidy the file, test a relationship, compare groups, compute valuation figures, rebuild a forecast. Done in spreadsheets, each step is manual, undocumented and hard to repeat with confidence.
+
+This case study treats the suite as a product: it reverse-engineers the requirements, documents how it works, audits whether it behaves as documented, and turns the gaps into a prioritized backlog.
+
+| Question | Answer |
 |---|---|
-| Requirements reverse-engineered from the code | `01-Requirements-and-Review/DAA_Requirements_and_Scope.docx` |
-| System documentation (modules, run flow, forecast model) | `01-Requirements-and-Review/DAA_System_Documentation.docx` |
-| Review findings, gap analysis and claims register | `01-Requirements-and-Review/DAA_Review_Findings_and_Gap_Analysis.docx` |
-| Verification log and the script that reproduces it | `01-Requirements-and-Review/DAA_Verification_Log.docx`, `05-Verification/` |
-| Improvement backlog with Gherkin acceptance criteria | `03-Jira-and-Agile/jira_import_DAA.csv`, `gherkin-features/` (14 stories, 61 story points) |
-| Findings, backlog, claims and verification registers | `06-Governance-and-Tracking/DAA_Review_and_Backlog_Workbook.xlsx` |
-| Run-flow, module and forecast diagrams | `02-Process-and-Diagrams/` (`.drawio`, `.svg`, `.png`) |
+| **What does the product do?** | Cleans a CSV or Excel file and runs one chosen analysis (regression, correlation, two-group t-test, valuation KPIs, five-year DCF forecast) through a single task runner, saving results to a fixed file for dashboards |
+| **Business need** | One repeatable, documented path from raw file to analysis output, replacing repetitive spreadsheet preparation |
+| **Where is it today?** | Core cleaning and statistics work; five defects stop the runner on a clean checkout; the forecast formulas need correction |
+| **What is the plan?** | A 14-story, 61-point improvement backlog, with a benchmark story to turn unmeasured benefit claims into evidence |
 
-## Diagrams
+---
+
+## 2. Product Management & Governance Artifacts
+
+| Artifact | What it shows | Location |
+|---|---|---|
+| **Requirements & scope** | Functional and non-functional requirements reverse-engineered from the code, with status per requirement; business rules BRL-01 to BRL-14 | [`01-Requirements-and-Review/DAA_Requirements_and_Scope.docx`](01-Requirements-and-Review/) |
+| **System documentation** | Module inventory, run flow, inputs and outputs, forecast model, dependencies | [`01-Requirements-and-Review/DAA_System_Documentation.docx`](01-Requirements-and-Review/) |
+| **System interaction diagrams** | Task-runner flow, module dependencies, forecast calculation chain | [`02-Process-and-Diagrams/`](02-Process-and-Diagrams/) (`.drawio`, `.svg`, `.png`) |
+| **Product backlog** | 5 epics, **14 stories, 61 story points**, MoSCoW priority, Fibonacci sizing | [`03-Jira-and-Agile/jira_import_DAA.csv`](03-Jira-and-Agile/jira_import_DAA.csv) |
+| **Acceptance criteria** | Gherkin Given/When/Then per story, including negative and boundary scenarios | [`03-Jira-and-Agile/gherkin-features/`](03-Jira-and-Agile/gherkin-features/) |
+| **Gap analysis & review findings** | Documented behaviour vs committed code, 13 findings with evidence and fixes | [`01-Requirements-and-Review/DAA_Review_Findings_and_Gap_Analysis.docx`](01-Requirements-and-Review/) |
+| **Registers workbook** | Findings, backlog, claims register, verification results, RAID | [`06-Governance-and-Tracking/DAA_Review_and_Backlog_Workbook.xlsx`](06-Governance-and-Tracking/) |
+
+**Backlog structure**
+
+| Epic | Priority | Stories |
+|---|---|---|
+| Reliability Fixes | Must | 5 (runner starts, finishes, forecast works) |
+| Configuration & Portability | Must | 2 |
+| Data Quality & Statistics | Should | 3 |
+| Forecast Model Correctness | Should | 2 |
+| Testing & Evidence | Should | 2 |
 
 ![Task runner flow](02-Process-and-Diagrams/DAA_Task_Runner_Flow.png)
 
-![Module dependencies](02-Process-and-Diagrams/DAA_Module_Dependency_Diagram.png)
+---
 
-![Forecast calculation chain](02-Process-and-Diagrams/DAA_Forecast_Calculation_Chain.png)
+## 3. Live Execution & Technical Layer
 
-## What the review found
+<table>
+<tr>
+<td>
 
-- **Works (Verified):** cleaning, regression, correlation, t-test and the simple DCF projection, called from a notebook or script.
-- **Fails on a clean checkout (Verified):** `import task_runner` raises `FileNotFoundError` (an example call sits at module level); `run_forecast` is imported and documented but not defined; the `kpi` task calls `valuation_kpis` with the wrong arguments; `default_folder.py` is missing a pandas import; saving fails when the file path is auto-selected.
-- **Can bias results (Verified):** every missing number becomes 0. On the test data a regression's R-squared fell from 0.789 (blanks left out) to 0.436 (zero-filled).
-- **Forecast formulas need correction (Read from code):** working-capital change is taken as a level, and NPV is a fixed 10% of final-year free cash flow.
-- **Unmeasured claims:** the original notes quote speed, hours-saved and accuracy figures with no measurement. The claims register lists each one; none is repeated here as a result.
-- **Not run:** the Yahoo Finance functions (KPI, assumptions, benchmarks) need internet access.
+### Source code repository
 
-## Next steps
+The Python modules, data-cleaning engine and call notebooks live in a separate technical repository.
 
-1. Fix the five failures so the runner starts and finishes (DAA-102, 104, 105, 103), then add `run_forecast` and correct the formulas together (DAA-101, 111).
-2. Replace hard-coded Windows paths with one configuration and add a requirements file (DAA-106, 107).
-3. Add tests and a small benchmark so the speed and effort claims become measured (DAA-113, 114).
+[![Open the source code repository](https://img.shields.io/badge/OPEN-data--analysis--automation--script-black?style=for-the-badge&logo=github)](https://github.com/700imran/data-analysis-automation-script)
 
-## Folder contents
+**Contains:** task runner, cleaning module, regression / correlation / t-test functions, valuation KPI module, DCF forecast and three-statement building blocks, call notebooks.
 
-- `01-Requirements-and-Review/`
-  - `DAA_Requirements_and_Scope.docx`
-  - `DAA_Review_Findings_and_Gap_Analysis.docx`
-  - `DAA_System_Documentation.docx`
-  - `DAA_Verification_Log.docx`
-- `02-Process-and-Diagrams/`
-  - `DAA_Forecast_Calculation_Chain.drawio`
-  - `DAA_Forecast_Calculation_Chain.svg`
-  - `DAA_Module_Dependency_Diagram.drawio`
-  - `DAA_Module_Dependency_Diagram.svg`
-  - `DAA_Task_Runner_Flow.drawio`
-  - `DAA_Task_Runner_Flow.svg`
-- `03-Jira-and-Agile/`
-  - `jira_import_DAA.csv`
-- `03-Jira-and-Agile/gherkin-features/` (14 files)
-- `05-Verification/`
-  - `README.md`
-  - `verification_output.txt`
-  - `verify_core_functions.py`
-- `06-Governance-and-Tracking/`
-  - `DAA_Review_and_Backlog_Workbook.xlsx`
+**Reviewed at commit:** `a04c40c`
 
-Verification: `python 05-Verification/verify_core_functions.py <path-to-cloned-repo>` reruns the offline checks; `verification_output.txt` is the output from my run.
+</td>
+</tr>
+</table>
+
+> **Deployment status:** the suite runs locally from notebooks or scripts. There is no hosted or production environment. [`05-Verification/verify_core_functions.py`](05-Verification/) reproduces the offline checks against a clone of the source repository.
+
+---
+
+## 4. Impact Metrics
+
+### Audit results
+
+| Metric | Result |
+|---|---|
+| Findings logged | **13** (3 high, 5 medium, 4 low, 1 information) |
+| Clean-checkout failures verified | 5 (import-time error, missing `run_forecast`, mismatched KPI call, missing import, save failure) |
+| Verification checks recorded | 12 (5 fail, 6 pass or behave as documented, 1 not run: needs live market data) |
+| Backlog created from findings | 14 stories, 61 story points |
+
+### Highest-impact data-quality finding
+
+The cleaning step replaces every missing number with 0, and later statistics treat those zeros as real observations. On the seeded test set (60 rows, 2 missing values):
+
+| Handling of missing values | Regression R-squared | Rows used |
+|---|---|---|
+| Blanks left out | **0.79** | 58 |
+| Replaced with 0 (current rule) | **0.44** | 60 |
+
+The zero-fill rule **lowers the model fit by about 44%**; it is raised as a high-priority data-quality story (DAA-108), not presented as an optimization.
+
+### Claims register (benefit evidence tracker)
+
+The original notes quote speed, hours-saved and accuracy figures. None was measured, so each is tracked with its evidence status.
+
+| Claim in source notes | Evidence status | Next step |
+|---|---|---|
+| 70-80% faster analytics workflows | Not measured | Benchmark story DAA-114 |
+| 10-15 analyst hours saved per week | Not measured | Time a sample workload before and after |
+| 30-40% better reliability | Not measured | Define the metric first |
+| 20% faster, 10-12% more accurate valuations | Not measured; model inputs unvalidated | Compare with a reference model after DAA-111 |
+| Reusable cleaning, statistics, KPI and forecast functions | **Supported** (core functions executed) | None |
+
+---
+
+### Disclosure
+
+| | |
+|---|---|
+| **Nature** | Personal project: real code, documented and reviewed afterwards |
+| **Data** | Synthetic test data only |
+| **Benefit figures** | Listed as unmeasured until the benchmark story is done |
+| **Authorship** | AI-assisted drafting; analysis, structure and review directed by me |

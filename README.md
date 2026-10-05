@@ -4,8 +4,8 @@ Two projects, matching the projects listed on my resume.
 
 | # | Project | Type | Folder |
 |---|---|---|---|
-| 1 | Fintech Invoice & Bank Reconciliation Workflow (Requirements, SQL, Data Validation) | Simulated: fictional client, synthetic data, modelled results | [01-Mizan-Invoice-Bank-Reconciliation](01-Mizan-Invoice-Bank-Reconciliation/) |
-| 2 | Data Analysis Automation Suite (Python, pandas, Statistics) | Real code ([source repository](https://github.com/700imran/data-analysis-automation-script)), documented and reviewed afterwards | [02-Data-Analysis-Automation-Suite](02-Data-Analysis-Automation-Suite/) |
+| 1 | Fintech Invoice & Bank Reconciliation Platform (Requirements, SQL, Data Validation) | Simulated case study: fictional client, synthetic data, modelled results | [01-Mizan-Invoice-Bank-Reconciliation](01-Mizan-Invoice-Bank-Reconciliation/) |
+| 2 | Enterprise Data Automation & Decision Platform (Agile, Data Modeling, Python) | Real code ([source repository](https://github.com/700imran/data-analysis-automation-script)), documented and reviewed afterwards | [02-Data-Analysis-Automation-Suite](02-Data-Analysis-Automation-Suite/) |
 
 Each folder has a README listing its deliverables and how they map to the resume.
 
